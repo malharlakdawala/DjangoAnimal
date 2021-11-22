@@ -5,13 +5,14 @@
     <title>Family</title>
 </head>
 <body>
-<h1>Hello family</h1>
-{%if family%}
-{%for key, values in family.items%}
+<h1>Hello animal who match family id</h1>
+{%if animal%}
+{%for i in animal%}
+{%for key,value in i.items%}
+<h1>{{key}}:{{value}}</h1>
 
-<h1>{{key}}:{{values}}</h1>
+{%endfor%}{%endfor%}
 
-{%endfor%}
 
 
 {%else%}
