@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animal Names</title>
+</head>
+<body>
+{% for i in range(len(animal_name)) %}
+<h1>{{animal_name[i]}}</h1>
+<!--<a href="/animal/{{i}}">{{animal_name[i]}}</a>-->
+
+{%endfor%}
+</body>
+</html>

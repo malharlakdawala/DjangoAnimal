@@ -1,0 +1,170 @@
+create a new folder, open pycharm on that folder, create new project
+
+#Django Intallation
+
+python -m venv env	  			#initialise a virtual environment
+env\Scripts\activate 				#activate environment (env should be seen)
+pip install django 				#install django
+python -m pip freeze > requirements.txt 	#for requirements
+django-admin startproject <projectname> 	#setup django project
+cd <projectname>   				#run startapp inside projrect folder
+python manage.py startapp <appname> 	 	#start django app, run this inside project name folder
+python manage.py runserver			#check if django is succesfully installed
+
+Inside the app folder, create a file called urls.py
+
+#directory structure
+projectname/
+    manage.py
+    db.sqlite3
+    projectname/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+    appname/
+        migrations/
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        urls.py
+        views.py
+
+To include this app in your project, add your app to the project's settings.py file by adding its name to the INSTALLED_APPS list:
+INSTALLED_APPS = [
+	'appname',
+	# ...
+]
+
+#Creating a view
+In <appname>/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+	path('',views.index)
+    path('people/', views.people_view),
+    path('people/<int:person_id>/', views.person_view, name='single_person_show')
+]
+
+#in <projectname>/urls.py
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('main.urls'))
+]
+
+In <appname>/views.py
+from django.shortcuts import render
+from .models import Person
+# Create your views here.
+
+def person_view(request, person_id):
+    peep = Person.objects.get(id=person_id)
+    return render(request, 'person.html', {'person': peep})
+
+def index(request):
+	return HttpResponse("Hello, World!")
+
+
+
+#Creating a template (html files)
+Create a new folder named 'templates' and 'static' inside app directory
+appname/
+   templates/
+      index.html
+	  person.html
+   static/
+      style.css
+      script.js
+	  
+
+Create Models (databases)
+
+#create databse in pgsql <databse_name>
+#pip install psycopg2
+
+in settings.py, do below on database section
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '<databse_name>',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+
+from django.db import models
+
+class Musician(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    instrument = models.CharField(max_length=100)
+
+class Album(models.Model):
+    artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    release_date = models.DateField()
+    num_stars = models.IntegerField()
+	
+#to affix the changes in the table
+python manage.py makemigrations
+python manage.py migrate
+#check psql database if tables and columns are visible
+
+Go to the file appname/admin.py and add the following code :
+
+from django.contrib import admin
+from .models import Person #import the Person model
+
+# Register your models here.
+admin.site.register(Person)
+
+python manage.py shell  #django shell, to insert/view data
+>>> from name_of_app.models import model1
+
+>>> x = name_of_model(field1=value, field2=value, ect..)
+# Save the object into the database. You have to call save() explicitly.
+>>> x.save()
+
+# Access model field values via Python attributes.
+>>> x.field1
+>>> x.field2
+
+>>> name_of_model.objects.filter(field1=value, field2=value)
+
+>>> name_of_model.objects.get(field1=value)
+>>> name_of_model.objects.order_by("field1")
+>>> name_of_model.objects.filter(field1=value).order_by("field1")
+>>> name_of_model.objects.filter(id=1).update(field1=value)
+>>> name_of_model.objects.all().delete()
+
+#for foreign key adding, use _id for inserting. if foreign key join with pet, then:
+>>> p = Person(first_name="John",  last_name="Doe", birth_date=date(1996,5,23), has_pet=True, pet_id=2) 
+>>> p.save()
+
+
+#Admin Page
+python manage.py createsuperuser
+
+To add a model to the Admin page include the following in admin.py:
+from django.contrib import admin
+from .models import Author, Book
+
+admin.site.register(Author)
+admin.site.register(Book)
+
+
+#Template pages
+

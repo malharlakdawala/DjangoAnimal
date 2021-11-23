@@ -1,0 +1,17 @@
+[
+  {
+    "name":"toby",
+    "age": 25,
+    "profession": "coder"
+  },
+  {
+    "name":"cj",
+    "age": 50,
+    "profession": "rapper"
+  },
+  {
+    "name":"alice",
+    "age": 75,
+    "profession": "oligarch"
+  }
+]

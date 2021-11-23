@@ -1,0 +1,51 @@
+STARTING A NEW PROJECT:
+python3 manage.py migrate
+python3 manage.py createsuperuser
+
+
+CREATING MODELS:
+inside each app there should be a models.py file, create a class tha inherits from models.Model
+add properties and fields (http://learn.di-learning.com/courses/collection/18/course/16/section/93/chapter/504)
+
+MIGRATING CREATED MODELS:
+once done creating/updating/editing models you do the following:
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+
+assuming we have a class of Person with the attributes name, country and age:
+CREATING OBJECTS:
+
+EITHER
+p = Person(name='toby', age=45, country='usa')
+p.save()
+
+OR
+Person.objects.create(name='toby', age=45, country='usa')
+
+
+RETRIEVING OBJECTS:
+queryset = Person.objects.all() # output all objects of this table in db in queryset
+Person.objects.get(id=) # outputs a single unique object, if none is found or more than one is found it will error
+queryset.filter(name='', age=34, country='') #get all matching all criteria
+queryset.exclude(name='', age=34, country='') #get al not matching criteria
+queryset.first()/last()
+
+DELETING OBJECTS OR QUERYSET
+
+queryset.delete()
+p.delete()
+
+
+adding a Foreign Key (fk) (One to Many/ many to one)
+if we have person and family, a person can only have one family, 
+therefore the fk will go on the person model
+
+ONCE YOU HAVE A FOREIGN KEY ON MODEL #1 IT WILL LINK TO MODEL #2 as such:
+
+p = Person.objects.get(id=1)
+p.family #shows you the family this person is part of
+
+f = Family.obejcts.get(id=1)
+f.person_set.all() # shows all people of that family
