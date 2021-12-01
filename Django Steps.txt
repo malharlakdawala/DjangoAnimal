@@ -123,6 +123,40 @@ python manage.py makemigrations
 python manage.py migrate
 #check psql database if tables and columns are visible
 
+
+
+#OneToOneField
+
+class Person(Model):
+    name = models.CharField(max_length=50)
+    
+class Passport(Model):
+    country = models.CharField(max_length=50)
+    person = models.OneToOneField(Person, on_delete=models.CASCADE)
+	
+	
+p = Person.objects.create(name='Rick')
+passport = Passport.objects.create(person=p, country='usa')
+
+#Many to Many
+
+class Hobby(Model):
+    name = models.CharField(max_length=50)
+    
+class Person(Model):
+    name = models.CharField(max_length=50)
+    hobbies = models.ManyToManyField(Hobby)
+
+
+h = Hobby.objects.create(name='gaming')
+p = Person.objects.get(id=1)
+p.hobbies.add(h) # add specific hobbies
+p.hobbies.remove(h) # remove specific hobbies
+p.hobbies.clear() # removes all previous hobbies
+p.hobbies.set([h]) # removes all previous hobbies and sets the list of hobbies provided
+
+h.person_set.all() # all people with this hobby
+
 Go to the file appname/admin.py and add the following code :
 
 from django.contrib import admin
@@ -165,6 +199,10 @@ from .models import Author, Book
 admin.site.register(Author)
 admin.site.register(Book)
 
+
+
+
+	
 
 #Template pages
 

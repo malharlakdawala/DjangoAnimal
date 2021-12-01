@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+{%block content%}
+
+{%for gif in gifs%}
+
+<img src="{{gif.url}}" alt="{{gif.title}}">
+<h6>{{gif.created_at}}</h6>
+
+
+{%endfor%}
+{%endblock%}

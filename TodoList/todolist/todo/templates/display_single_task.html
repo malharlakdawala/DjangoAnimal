@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+{%block content%}
+
+{{todo.title}}
+
+{{todo.details}}
+{%if todo.has_been_done%}
+<h3>The task is completed</h3>
+
+{%else%}
+
+<h3>The task is pending</h3>
+<button href="" type="button">Task Done</button>
+
+{%endif%}
+
+    {%endblock%}
