@@ -3,7 +3,7 @@
 
 <div class="container mt-5">
     <div class="d-flex justify-content-center row">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="p-4 bg-white notes">
                 <div class="d-flex flex-row align-items-center notes-title">
                     <h4>Task List</h4><span class="px-2 review-text ml-2 rounded">vital</span>
@@ -12,11 +12,35 @@
                         class="dot"></span><span class="info ml-1">ML - 1321</span></div>
             </div>
             <div class="p-3 bg-white">
-{% for todo in todo %}
 
-                <div class="d-flex align-items-center"><label><input type="checkbox" class="option-input radio"><span
-                        class="label-text">{{todo.title}}-> {{todo.details}}</span></label></div>
-{% endfor %}
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Completed</th>
+      <th scope="col">Date of Completion</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for todo in todo %}
+
+    <tr>
+      <th scope="row">{{todo.id}}</th>
+      <td><a href="/todo/{{todo.id}}">{{todo.title}}</td>
+      <td>{{todo.details}}</td>
+      <td>
+          {%if todo.has_been_done%} Done
+          {%else%} Not Completed
+          {%endif%}
+          </td>
+      <td>{{todo.date_completion}}</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
 
             </div>
         </div>

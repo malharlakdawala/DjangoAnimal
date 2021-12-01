@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .models import Todo, Category
+from datetime import date
 
 # Create your views here.
 def display_todos (request):
@@ -42,3 +43,14 @@ def todo(request):
         # GET, generate blank form
         context['form'] = ContactForm()
     return render(request, 'todo.html', context)
+
+def done_click(request,id,done_clicked):
+    todo= Todo.objects.get(id=id)
+    if done_clicked:
+        todo.has_been_done=True
+        todo.date_completion=date.today()
+    else:
+        todo.has_been_done=False
+        todo.date_completion=None
+    todo.save()
+    return render(request, 'display_single_task.html', {'todo': Todo.objects.get(id=todo.id)})

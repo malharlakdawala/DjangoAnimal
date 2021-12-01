@@ -6,12 +6,15 @@
 {{todo.details}}
 {%if todo.has_been_done%}
 <h3>The task is completed</h3>
+<a href="{% url 'done_click' todo.id 0 %}" class="btn btn-success">Task Not Done</a>
 
 {%else%}
 
 <h3>The task is pending</h3>
-<button href="" type="button">Task Done</button>
+
+<a href="{% url 'done_click' todo.id 1 %}" class="btn btn-success">Task Done</a>
 
 {%endif%}
 
+<a href="{%url 'display_todos'%}">See All Tasks</a>
     {%endblock%}
