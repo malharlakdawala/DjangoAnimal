@@ -4,6 +4,8 @@
 {{todo.title}}
 
 {{todo.details}}
+
+{{msg}}
 {%if todo.has_been_done%}
 <h3>The task is completed</h3>
 <a href="{% url 'done_click' todo.id 0 %}" class="btn btn-success">Task Not Done</a>

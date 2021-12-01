@@ -14,36 +14,39 @@
             <div class="p-3 bg-white">
 
                 <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Completed</th>
-      <th scope="col">Date of Completion</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for todo in todo %}
+                    <thead>
+                    <tr>
+                        <th scope="col">Uncompleted Todos</th>
+                        <th scope="col">Completed Todos</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for todo in todo %}
 
-    <tr>
-      <th scope="row">{{todo.id}}</th>
-      <td><a href="/todo/{{todo.id}}">{{todo.title}}</td>
-      <td>{{todo.details}}</td>
-      <td>
-          {%if todo.has_been_done%} Done
-          {%else%} Not Completed
-          {%endif%}
-          </td>
-      <td>{{todo.date_completion}}</td>
-    </tr>
-  {% endfor %}
+                    <tr>
+                        <td>
+                            {%if not todo.has_been_done%}
+                            <a href="/todo/{{todo.id}}">{{todo.title}}
 
-  </tbody>
-</table>
+                                {%endif%}
+                        </td>
+
+                        <td>
+                            {%if todo.has_been_done%}
+                            <a href="/todo/{{todo.id}}">{{todo.title}}
+
+
+                                {%endif%}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
 
             </div>
         </div>
     </div>
 </div>
-    {%endblock%}
+{%endblock%}
