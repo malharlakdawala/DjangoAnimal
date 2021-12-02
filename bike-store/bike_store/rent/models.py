@@ -31,8 +31,10 @@ class Vehicle(models.Model):
     real_cost=models.IntegerField(default=1000)
     vehicle_size=models.ForeignKey(Vehicle_size,on_delete=models.CASCADE)
 
-    def __int__(self):
-        return self.real_cost
+    def __str__(self):
+        vehicle_name_size = f'{self.vehicle_type.name} {self.vehicle_size.name}'
+
+        return vehicle_name_size
 
 
 class Rental(models.Model):

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .models import *
 from faker import Faker
 from django.http import HttpResponse
+from .forms import *
 import random
 
 
@@ -54,7 +55,41 @@ def single_rental(request,id):
 
 
 def add_rental(request):
-    pass
+    context={
+        'page_title':"Add Rental",
+        'form':Add_rental
+    }
+    if request.method == "POST":
+        form = Add_rental(request.POST)
+        print("data", form.data)
+        if form.is_valid():
+            rental_date = form.cleaned_data['rental_date']
+            return_date = form.cleaned_data['return_date']
+            customer = form.cleaned_data['customer']
+            vehicle = form.cleaned_data['vehicle']
+            context['formInfo'] = {
+                'rental_date': rental_date,
+                'return_date': return_date,
+                'customer': customer,
+                'vehicle': vehicle
+            }
+            # context['btnFormHidden'] = True  # To hide the button is the form is successfully submitted
+            # print the values to make sure their are correct
+            print(context['formInfo'])
+            print("cleaned data form is: ", form.cleaned_data)
+            rental = Rental.objects.create(**form.cleaned_data)
+            return render(request,'success.html')
+            #return render(request, 'rental/add_rental.html', {'rental': Rental.objects.get(id=rental.id)})
+        else:
+            print("---ERRORS---", form.errors)
+            context['form'] = form
+            return render(request, 'add_rental.html', context)
+    else:
+        # GET, generate blank form
+        context['form'] = Add_rental()
+    return render(request, 'rental/add_rental.html', context)
+
+
 
 def all_customer(request):
     pass
