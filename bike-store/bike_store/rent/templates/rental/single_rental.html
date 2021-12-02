@@ -1,0 +1,22 @@
+{%include 'base.html'%}
+<br>
+<div class="row mb-2 justify-content-center">
+    <div class="col-md-4">
+            <h3 style="text-align:center;">Customer Details</h3>
+
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">Bike not returned</strong>
+                <h1 class="mb-0">{{rental_details.customer.first_name}} {{rental_details.customer.last_name}}</h1>
+                <div class="mb-1 text-muted"> {{rental_details.customer.phonenumber}}</div>
+                <p class="mb-auto">{{rental_details.customer.email}}</p>
+                <p class="mb-auto">Rental Date: {{rental_details.rental_date}}</p>
+                <br>
+                <a href="{%url 'all_rental'%}" class="stretched-link">Go Back</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+
+            </div>
+        </div>
+    </div>
+</div>

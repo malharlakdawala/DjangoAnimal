@@ -16,6 +16,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th scope="col">Delete</th>
                         <th scope="col">Uncompleted Todos</th>
                         <th scope="col">Completed Todos</th>
                     </tr>
@@ -24,6 +25,8 @@
                     {% for todo in todo %}
 
                     <tr>
+                        <td><a href="/delete/{{todo.id}}">Delete task</a></td>
+
                         <td>
                             {%if not todo.has_been_done%}
                             <a href="/todo/{{todo.id}}">{{todo.title}}

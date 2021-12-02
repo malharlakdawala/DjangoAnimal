@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import ContactForm
 from .models import Todo, Category
 from datetime import date, datetime, timezone
-
+from django.http import HttpResponse
 
 # Create your views here.
 def display_todos(request):
@@ -80,5 +80,12 @@ def deadline_check(id):
 
     return msg
 
-# print((a.deadline_date-datetime.now(timezone.utc)).days)
-# print(a.deadline_date-date.today())
+
+def delete_all(request):
+    Todo.objects.filter(id=id).all()
+    return render(request, 'display_all.htm')
+
+def delete_task(request, id):
+    if Todo.objects.filter(id=id):
+        Todo.objects.filter(id=id).delete()
+        return HttpResponse('display_todos')

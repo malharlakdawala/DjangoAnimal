@@ -1,0 +1,46 @@
+{%include 'base.html'%}
+<br>
+<div class="row mb-2 justify-content-center">
+
+    <div class="col-md-3">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">Rental</strong>
+                <h1 class="mb-0">Post title</h1>
+                <div class="mb-1 text-muted"> </div>
+                <p class="mb-auto">Total number of rentals of vehicles done as of today</p>
+                <a href="{%url 'all_rental'%}" class="stretched-link">View more</a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-3">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">Customers</strong>
+                <h1 class="mb-0">Post title</h1>
+                <div class="mb-1 text-muted"> </div>
+                <p class="mb-auto">Total number of customers who rented as of today</p>
+                <a href="#" class="stretched-link">View Details</a>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-3">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">Vehicle</strong>
+                <h1 class="mb-0">Post title</h1>
+                <div class="mb-1 text-muted"> </div>
+                <p class="mb-auto">Total number of vehicles bought as of today</p>
+                <a href="#" class="stretched-link">View Details</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{%include 'footer.html'%}
+

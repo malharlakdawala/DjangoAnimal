@@ -1,0 +1,20 @@
+First Name->required
+lastname
+full name
+title
+Companyname
+link (comma separated)
+phoneno.
+email id
+address
+city
+state
+country
+pincode
+company description
+industry
+company website
+company revenue
+company address
+employee count
+Extra info
