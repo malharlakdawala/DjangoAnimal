@@ -46,7 +46,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('',views.index)
+	path('',views.homepage,name='homepage')
     path('people/', views.people_view),
     path('people/<int:person_id>/', views.person_view, name='single_person_show')
 ]
@@ -233,3 +233,83 @@ TEMPLATES = [
             ],
         },
     },
+
+
+
+Login Logout
+#in settings.py page
+LOGOUT_REDIRECT_URL = 'homepage'
+LOGIN_REDIRECT_URL = 'homepage'
+
+app/urls.py
+from django.urls import path
+from . import views
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+
+
+urlpatterns = [
+    path('', views.homepage, name='homepage'),
+    path('login/', LoginView.as_view(template_name='mainpage/login.html',success_url = reverse_lazy('homepage')), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    #path('profile/', views.UserUpdateView.as_view(), name='my_profile'),
+    path('signup/', views.SignupView.as_view(), name='signup'),
+
+]
+
+apps/forms.py
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
+from django import forms
+
+
+class RegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+class ProfileCreateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone', 'profession']
+
+
+app.models.py
+from django.db import models
+from django.contrib.auth.models import User
+
+# Create your models here.
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=100)
+    profession = models.CharField(max_length=100)
+    image = models.ImageField(null=True, upload_to='profile_pics/')
+
+    def pic(self):
+        if self.image:
+            return self.image.url
+        else:
+            return 'https://bootdey.com/img/Content/avatar/avatar6.png'
+
+
+app/views.py
+
+from django.shortcuts import render
+from django.views.generic import CreateView, UpdateView
+from .forms import RegistrationForm
+from django.urls import reverse_lazy
+
+# Create your views here.
+def homepage(request):
+    return render(request, 'mainpage/homepage.html')
+
+class SignupView(CreateView):
+    form_class = RegistrationForm
+    success_url = reverse_lazy('homepage')
+    template_name = 'mainpage/signup.html'
+
+
+DO python manage.py migrate
+for commiting changes

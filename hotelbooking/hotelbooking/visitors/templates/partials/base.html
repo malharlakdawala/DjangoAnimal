@@ -1,0 +1,34 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<title>Pratap Heritage | {%block title%} {%endblock%}</title>
+
+{%include 'partials/navbar.html'%}
+
+
+<div class="container my-4" id="content-container">
+{% block content %}
+{% endblock %}
+</div>
+
+{%include 'partials/footer.html'%}
+
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
+
+
+
+
+
+
+
+
+
+
+
