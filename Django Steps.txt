@@ -245,29 +245,31 @@ app/urls.py
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
 
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path('login/', LoginView.as_view(template_name='mainpage/login.html',success_url = reverse_lazy('homepage')), name='login'),
+    path('login/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    #path('profile/', views.UserUpdateView.as_view(), name='my_profile'),
-    path('signup/', views.SignupView.as_view(), name='signup'),
+    path('profile/', views.UserUpdateView.as_view(), name='my_profile'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
 
 ]
 
+
 apps/forms.py
+from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
-from django import forms
 
 
-class RegistrationForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'email', 'first_name']
 
 class ProfileCreateForm(forms.ModelForm):
     class Meta:
@@ -297,19 +299,115 @@ class Profile(models.Model):
 app/views.py
 
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView
-from .forms import RegistrationForm
+from .forms import UserRegisterForm, ProfileCreateForm
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User
+from .models import Profile
+
 
 # Create your views here.
 def homepage(request):
-    return render(request, 'mainpage/homepage.html')
+    return render(request, 'partials/base.html')
 
-class SignupView(CreateView):
-    form_class = RegistrationForm
+
+class SignUpView(SuccessMessageMixin, CreateView):
+    template_name = 'accounts/signup.html'
     success_url = reverse_lazy('homepage')
-    template_name = 'mainpage/signup.html'
+    form_class = UserRegisterForm
+    success_message = "Your profile was created successfully"
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data()
+    #     context['profile_form'] = UserRegisterForm(self.request.POST or None)
+    #     print(context)
+    #     return context
+    # used to enter a new datapoint while entering
+
+    # def form_valid(self, form):
+    #     signup_form = UserRegisterForm(self.request.POST)
+    #     if signup_form.is_valid():
+    #         self.object = form.save()
+    #         profile = signup_form.save(commit=False)
+    #         profile.user = self.object
+    #         profile.save()
+    #         return super().form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+    #
+
+    # def form_invalid(self, form):
+    #     # same as above
+    #     print('form is invalid')
+    #     return super().form_invalid(form)
 
 
-DO python manage.py migrate
+class UserUpdateView(UpdateView):
+    model = User
+    fields = ['first_name', 'last_name', 'email']
+    template_name = 'accounts/profile.html'
+    success_url = reverse_lazy('homepage')
+
+    def get_object(self, queryset=None):
+        # this will nullify the need for a pk in the url, by default get_object is the function in
+        # detail views that requires a pk or slug
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        if Profile.objects.filter(user=self.request.user).exists():
+            context['profile_form'] = ProfileCreateForm(self.request.POST or None, instance=self.request.user.profile)
+            print(context)
+            # update form
+        else:
+            context['profile_form'] = ProfileCreateForm(self.request.POST or None)
+            print(context)
+            # create form
+        return context
+
+    def form_valid(self, form):
+        if Profile.objects.filter(user=self.request.user).exists():
+            profile_form = ProfileCreateForm(self.request.POST, instance=self.request.user.profile)
+        else:
+            profile_form = ProfileCreateForm(self.request.POST)
+        if profile_form.is_valid():
+            self.object = form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = self.object
+            profile.save()
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+DO 
+python manage.py makemigrations
+python manage.py migrate
 for commiting changes
+
+Django bootstrap
+https://django-bootstrap-v5.readthedocs.io/en/latest/
+pip install django-bootstrap-v5
+got it settings, add appname, 'bootstrap5'
+
+login.html
+  {% bootstrap_form form %}
+
+signup.html
+  {% bootstrap_form form %}
+
+profile.html
+  {% bootstrap_form form %}
+  {% bootstrap_form profile_form %}
+
+navbar.html
+{% if user.is_authenticated %}
+<li class="nav-item">
+	<a href="{% url 'my_profile' %}" class="nav-link">Hello {{user.username}}</a></li>
+<li><a href="{% url 'logout' %}" class="nav-link active">Logout</a></li>
+{% else %}
+<li class="nav-item">
+	<a href="{% url 'login' %}" class="nav-link ">Login</a>
+</li>
+{%endif%}

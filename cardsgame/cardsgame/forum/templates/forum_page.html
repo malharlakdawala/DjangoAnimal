@@ -1,0 +1,32 @@
+{%extends 'partials/base.html'%}
+{%load bootstrap5%}
+{%block title%}Forum{%endblock%}
+{%block content%}
+<div class="col-md-6 mx-auto">
+    <form method="post" class="form">
+  {% csrf_token %}
+        This is a Forum page
+        <ul>
+      {%for post in posts%}
+       <li> {{post.title}}</li>
+       <li> {{post.post}}</li>
+       <li> {{post.date_created}}</li>
+       <li> {{post.forum_post_author}}</li>
+
+            {%for comment in post.comments.all%}
+            {{comment}}
+
+            {%endfor%}
+
+
+            </ul>
+        {%endfor%}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  {% endbuttons %}
+</form>
+
+    </div>
+{%endblock%}
