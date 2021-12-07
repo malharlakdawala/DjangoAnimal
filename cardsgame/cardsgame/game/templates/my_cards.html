@@ -1,0 +1,22 @@
+{%extends 'partials/base.html'%}
+{%load bootstrap5%}
+{%block title%}Comment{%endblock%}
+{%block content%}
+{%load static%}
+<div class="col-md-6 mx-auto">
+    My Cards
+    {%for card in cards_list%}
+<ul>
+    <li>Name: {{card.name}}</li>
+    <li>Height: {{card.height}}</li>
+    <li>Mass: {{card.mass}}</li>
+    <li>Homeworld: {{card.homeworld}}</li>
+    <li>ID: {{card.id}}</li>
+    <a href="{%url 'transfer' card.id%}" class="btn btn-primary-sm">Transfer</a>
+
+</ul>
+
+    {%endfor%}
+
+    </div>
+{%endblock%}

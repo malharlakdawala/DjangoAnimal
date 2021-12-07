@@ -5,8 +5,9 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from .models import Profile, Starwars_people
+from game.models import Deck
 import requests
-import json
+import random
 import time
 
 
@@ -21,6 +22,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     form_class = UserRegisterForm
     success_message = "Your profile was created successfully"
 
+
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data()
     #     context['profile_form'] = UserRegisterForm(self.request.POST or None)
@@ -28,17 +30,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     #     return context
     # used to enter a new datapoint while entering
 
-    # def form_valid(self, form):
-    #     signup_form = UserRegisterForm(self.request.POST)
-    #     if signup_form.is_valid():
-    #         self.object = form.save()
-    #         profile = signup_form.save(commit=False)
-    #         profile.user = self.object
-    #         profile.save()
-    #         return super().form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-    #
+
 
     # def form_invalid(self, form):
     #     # same as above
@@ -72,16 +64,29 @@ class UserUpdateView(UpdateView):
     def form_valid(self, form):
         if Profile.objects.filter(user=self.request.user).exists():
             profile_form = ProfileCreateForm(self.request.POST, instance=self.request.user.profile)
+            new_profile=False
+            #print("profile already there")
+
         else:
+            new_profile=True
             profile_form = ProfileCreateForm(self.request.POST)
         if profile_form.is_valid():
             self.object = form.save()
             profile = profile_form.save(commit=False)
             profile.user = self.object
             profile.save()
+            if new_profile: #cards allotment happening here for people who update their profile
+                a=Deck.objects.create(profile=self.request.user)
+                items = list(Starwars_people.objects.all())
+                random_items = random.sample(items, 6)
+                a.cards.add(*random_items)
+                #print("cards alloted")
+
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
+
+
 
 
 #add Star wars data
@@ -100,3 +105,4 @@ def add_data(request):
         time.sleep(2)
         print("insert sucessfull for ", i)
     return render(request, 'partials/base.html')
+

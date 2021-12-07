@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap5',
     'forum',
+    'game',
 ]
 
 MIDDLEWARE = [

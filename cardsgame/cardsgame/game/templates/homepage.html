@@ -1,0 +1,23 @@
+{%extends 'partials/base.html'%}
+{%load bootstrap5%}
+{%block title%}Comment{%endblock%}
+{%block content%}
+{%load static%}
+<div class="col-md-6 mx-auto">
+Live Transactions
+    {%for transaction in transaction_live%}
+<ul>
+    <li>Username: {{card.name}}</li>
+    <li>Card Name: {{card.height}}</li>
+    <li>Card Height: {{card.height}}</li>
+    <li>Card Mass: {{card.mass}}</li>
+    <li>Homeworld: {{card.homeworld}}</li>
+    <li>ID: {{card.id}}</li>
+    <a href="{%url 'transfer' card.id%}" class="btn btn-primary-sm">Transfer</a>
+
+</ul>
+
+    {%endfor%}
+
+    </div>
+{%endblock%}
