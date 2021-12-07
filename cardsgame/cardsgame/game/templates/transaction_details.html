@@ -4,14 +4,14 @@
 {%block content%}
 {%load static%}
 <div class="col-md-6 mx-auto">
-Live Transactions
-    {%for transaction in transaction_live%}
-<ul>
-    <li>Username: {{transaction.username}}</li>
-    <li>Card Name: {{transaction.name}}</li>
-    <li>Card Height: {{transaction.height}}</li>
-    <li>Card Mass: {{transaction.mass}}</li>
-    <li>Card Homeworld: {{transaction.homeworld}}</li>
+This transaction
+
+    <ul>
+    <li>Username: {{transaction.card_sender.username}}</li>
+    <li>Card Name: {{transaction.card_details.name}}</li>
+    <li>Card Height: {{transaction.card_details.height}}</li>
+    <li>Card Mass: {{transaction.card_details.mass}}</li>
+    <li>Card Homeworld: {{transaction.card_details.homeworld}}</li>
     <li>Transaction Status: {{transaction.transaction_status}}</li>
     <li>ID: {{transaction.transaction_id}}</li>
     <li>{{transaction.date_created|timesince}}</li>
@@ -19,7 +19,6 @@ Live Transactions
 
 </ul>
 
-    {%endfor%}
-
+    {{cards_list}}
     </div>
 {%endblock%}

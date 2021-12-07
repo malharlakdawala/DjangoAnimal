@@ -6,4 +6,5 @@ urlpatterns = [
     path('my_cards', views.my_cards, name='my_cards'),
     path('transfer/<int:id>', views.transfer, name='transfer'),
     path('homepage', views.homepage, name='homepage'),
+    path('transaction/<int:id>', views.transaction, name='transaction'),
 ]

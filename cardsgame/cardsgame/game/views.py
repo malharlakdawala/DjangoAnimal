@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from .models import Deck, Transaction
 from accounts.models import Starwars_people
 from django.contrib.auth.models import User
+from .forms import SelectCard
 
 
 def my_cards(request):
@@ -48,4 +49,34 @@ def homepage(request):
               }
         transaction_live.append(dict)
     return render(request, 'homepage.html',{'transaction_live':transaction_live})
+
+def transaction(request,id):
+    transaction = Transaction.objects.get(id=id)
+    form=SelectCard(request.user)
+
+    if request.user.is_authenticated:
+        get_deck_object_user=Deck.objects.filter(profile=request.user).values()
+        object_id=get_deck_object_user[0]["id"]
+        cards_list=Starwars_people.objects.filter(deck=object_id)
+    return render(request, 'transaction_details.html',{'transaction':transaction,'form':form})
+
+    # username = User.objects.get(id=transaction.id).username
+    # card_name = Starwars_people.objects.get(id=transaction.card_details_id).name
+    # card_height = Starwars_people.objects.get(id=transaction.card_details_id).height
+    # card_mass = Starwars_people.objects.get(id=transaction.card_details_id).mass
+    # card_homeworld = Starwars_people.objects.get(id=transaction.card_details_id).homeworld
+    # date_created = transaction.date_created
+    # transaction_status = transaction.transaction_status
+    # transaction_id = transaction.id
+    # transaction_details = {
+    #     'username': username,
+    #     'card_name': card_name,
+    #     'card_height': card_height,
+    #     'card_mass': card_mass,
+    #     'card_homeworld': card_homeworld,
+    #     'date_created': date_created,
+    #     'transaction_status': transaction_status,
+    #     'transaction_id': transaction_id
+    # }
+    # cards_receiver=request.user
 
