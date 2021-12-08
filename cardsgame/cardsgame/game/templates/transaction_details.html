@@ -19,6 +19,14 @@ This transaction
 
 </ul>
 
-    {{cards_list}}
+
+        <form method="post" class="form">
+  {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+    <input type="submit" value="Submit">
+  {% endbuttons %}
+</form>
+
     </div>
 {%endblock%}
