@@ -1,0 +1,74 @@
+
+navbar: form (field->dropdown, textbox, submit(search))
+logo-> right
+
+side navbar:
+Search -> Search Homepage
+calling -> Call logs page
+Chat Center ->
+Dashboard ->
+Profile ->
+
+search homepage:
+image, + above form
+
+search resultspage:
+-googlemap window
+-data results (click expand)
+-pagination(10 reults per page)
+-call/msg -> call api
+
+Call logs page
+data log from api/database. Check api
+search query, sort query
+
+
+chat center
+-email
+-message
+-whatsapp
+check api
+send message
+get configuration details updated in user profile form
+
+
+dashboard
+from api, count etc
+
+profile page
+-update profile
+
+admin
+
+
+unkowns
+frejun api
+telephant api
+google map api
+<iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=challenger%20towers%20kandivali%20east&key=AIzaSyCWpr1t7055e-ZTjV-NHWNI3SQmV8f792w"></iframe>
+
+django apps
+1. search app
+search -> 'search' -> search homepage screen (navbar, sidebar, base, css, etc here only)
+search reults > 'search/results/' search results page
+each details > 'search/results/1' indivdueal details or calls
+
+2. call app
+call logs > 'calllogs/' > call logs page
+button cliks > have to generate params query
+
+3. chat app
+chat > 'chat/' > chat page
+check for clicks?
+
+
+4. dashboard app
+dashboard > 'dashboard/call/' -> get call views
+dashboard > 'dashboard/messages/' -> get messages views
+dashboard > 'dashboard/whatsapp/' -> get whatsapp views
+
+
+5. accounts app
+signup, login, profile
+
+6. admin app
