@@ -1,0 +1,18 @@
+{%extends 'partials/base.html'%}
+{%load bootstrap5%}
+{%block title%}Search{%endblock%}
+{%block content%}
+<div class="col-md-6 mx-auto">
+    Hi This is search page
+    <form method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+        {% endbuttons %}
+    </form>
+
+</div>
+{%endblock%}

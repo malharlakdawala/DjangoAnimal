@@ -1,0 +1,39 @@
+{%extends 'partials/base.html'%}
+{%load bootstrap5%}
+{%load static%}
+{%block title%}Search Results{%endblock%}
+{%block content%}
+<div class="container-lg">
+    Hi This is search results page
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Contact Person</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone No.</th>
+            <th scope="col">Address</th>
+            <th scope="col">Call</th>
+            <th scope="col">Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for query in queryset%}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{query.company_name}}</td>
+            <td>{{query.description}}</td>
+            <td>{{query.contact_person}}</td>
+            <td>{{query.emails}}</td>
+            <td>{{query.phones}}</td>
+            <td>{{query.address}}</td>
+            <td><a href="#" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Call</a></td>
+            <td><a href="{%url 'message' query.uuid_field%}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Message</a></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+{%endblock%}
