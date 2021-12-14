@@ -4,6 +4,19 @@
 {%block title%}Search Results{%endblock%}
 {%block content%}
 <div class="container-lg">
+    <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
+            src="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyD_GA7bt6y8yKDyKrazSICaf_d3mr02n4k"></iframe>
+            https://www.google.com/maps/embed/v1/place?q=challenger%20towers%20kandivali%20east&key=AIzaSyD_GA7bt6y8yKDyKrazSICaf_d3mr02n4k
+    <iframe
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD_GA7bt6y8yKDyKrazSICaf_d3mr02n4k
+    &q=Space+Needle,Seattle+WA">
+</iframe>
+
     Hi This is search results page
     <table class="table">
         <thead>
@@ -30,10 +43,33 @@
             <td>{{query.phones}}</td>
             <td>{{query.address}}</td>
             <td><a href="#" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Call</a></td>
-            <td><a href="{%url 'message' query.uuid_field%}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Message</a></td>
+            <td><a href="{%url 'message' query.uuid_field%}" class="btn btn-primary " tabindex="-1" role="button"
+                   aria-disabled="true">Message</a></td>
         </tr>
         {%endfor%}
         </tbody>
     </table>
+    {% if queryset.has_other_pages %}
+    <ul class="pagination">
+        {% if queryset.has_previous %}
+        <li><a href="?page={{ queryset.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in queryset.paginator.page_range %}
+        {% if queryset.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if queryset.has_next %}
+        <li><a href="?page={{ queryset.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
 </div>
 {%endblock%}
