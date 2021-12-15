@@ -3,6 +3,9 @@ import json
 from django.shortcuts import render
 from search.models import CompanyRecords
 from django.http import HttpResponse
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 # Create your views here.
 def message(request,str):
@@ -12,8 +15,15 @@ def message(request,str):
     contact_person=''.join(queryset.contact_person.split())
     return render(request, "message.html", {"queryset":queryset, "email": email, "phone":phone, "contact_person":contact_person})
 
-def email(request,str):
-    pass
+def email(request,mails):
+    mail_list = list(mails.split(","))
+    send_mail(
+        subject="Test Email",
+        message="Hello how are you. This is a test email",
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=mail_list)
+    return HttpResponse(str("Email message sent succesfully"))
+
 
 def call(request,str):
     pass

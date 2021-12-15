@@ -18,3 +18,5 @@ cardsgame/env
 leadzen_project/env
 leadzen_project/leadzen_project/leadzen_project/
 leadzen_project/leadzen_project/leadzen_project/settings.py
+leadzen_project/leadzen_project/leadzen_project/.env
+leadzen_project/leadzen_project/leadzen_project/env
