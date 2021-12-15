@@ -1,0 +1,88 @@
+{
+  "info": {
+    "_postman_id": "cd03ebf9-2f28-4c01-9213-4eb9c1aa907d",
+    "name": "Calling APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Call API",
+      "id": "3d55510b-8c1a-44db-b8dc-7cb6c148afcd",
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": {
+            "key": "Authorization",
+            "value": "Api-Key ms31xIcP.egqYyJ4NsKZsc5nw91z4PZAg9Pkpn9ss",
+            "in": "header"
+          }
+        },
+        "method": "POST",
+        "header": [
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"recruiter_email\": \"nikhilesh@frejun.com\",\r\n    \"transaction_id\": \"1\",\r\n    \"job_id\": \"SDE\",\r\n    \"candidate_id\": \"1\",\r\n    \"candidate_number\": \"9109999999999\",\r\n    \"candidate_name\": \"Jargon\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "https://product.hr.frejun.com/api/v1/integrations/create-call/"
+      },
+      "response": [
+      ]
+    },
+    {
+      "name": "Calls List API",
+      "id": "b32cc563-fa78-41f8-976d-2f5caaeafd44",
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": {
+            "key": "Authorization",
+            "value": "Api-Key ms31xIcP.egqYyJ4NsKZsc5nw91z4PZAg9Pkpn9ss",
+            "in": "header"
+          }
+        },
+        "method": "GET",
+        "header": [
+        ],
+        "url": {
+          "raw": "https://product.hr.frejun.com/api/v1/integrations/calls/?page_size=8&date=25/08/21 00:00:00&date_end=25/08/21 23:59:59",
+          "protocol": "https",
+          "host": [
+            "product",
+            "hr",
+            "frejun",
+            "com"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "integrations",
+            "calls",
+            ""
+          ],
+          "query": [
+            {
+              "key": "page_size",
+              "value": "8"
+            },
+            {
+              "key": "date",
+              "value": "25/08/21 00:00:00"
+            },
+            {
+              "key": "date_end",
+              "value": "25/08/21 23:59:59"
+            }
+          ]
+        }
+      },
+      "response": [
+      ]
+    }
+  ]
+}
