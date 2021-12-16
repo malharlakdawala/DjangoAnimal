@@ -1,24 +1,17 @@
-.nav-wrapper{
-    background-color: #F8F8F8; !important;
-
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#nav-mobile li a{
-    color: #000000; !important;
-    font-family: Poppins; !important;
+*:not(path):not(g){
 
+    #outline: solid 0.25rem green;
 }
 
+.red{
 
-.btn{
-    background-color: #FB3E3E;
-    color: #ffffff;
+    background-color: red;
+    color: red;
 }
 
-.sidenav{
-    background-color: #1b1b1b;
-}
-
-.sidenav li a{
-    color: white;
-}
