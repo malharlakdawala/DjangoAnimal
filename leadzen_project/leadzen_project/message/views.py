@@ -25,8 +25,26 @@ def email(request,mails):
     return HttpResponse(str("Email message sent succesfully"))
 
 
-def call(request,str):
-    pass
+def call(request,phn,name):
+    phn=str(phn)
+    phone_no = phn[:2]+"0"+phn[2:]
+    print(phone_no)
+    url = "https://product.hr.frejun.com/api/v1/integrations/create-call/"
+
+    parameters = {
+        "recruiter_email": "zeel.mehta@kapso.in",
+        "transaction_id": "1",
+        "job_id": "SDE",
+        "candidate_id": "1",
+        "candidate_number": phone_no,
+        "candidate_name": name
+    }
+
+    r = requests.post(url, headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'},data=parameters)
+
+    print(r.text)
+    return HttpResponse(str("Call placed sent succesfully"))
+
 
 def sms(request,str):
     pass

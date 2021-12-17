@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
-from .models import Profile, Starwars_people
+# from .models import Profile, Starwars_people
 #import requests
 import random
 import time
@@ -89,19 +89,19 @@ class UserUpdateView(UpdateView):
 
 
 #add Star wars data
-def add_data(request):
-    for i in range(30, 80):
-        starwars_response = requests.get(f"https://swapi.dev/api/people/{i}/").json()
-        starwars_name = starwars_response["name"]
-        starwars_height = starwars_response["height"]
-        if isinstance(starwars_response["mass"], int):
-            starwars_mass = starwars_response["mass"]
-        else:
-            starwars_mass = None
-        starwars_home = requests.get(starwars_response["homeworld"]).json()["name"]
-        a = Starwars_people.objects.create(name=starwars_name, height=starwars_height, mass=starwars_mass,
-                                           homeworld=starwars_home)
-        time.sleep(2)
-        print("insert sucessfull for ", i)
-    return render(request, 'partials/base.html')
-
+# def add_data(request):
+#     for i in range(30, 80):
+#         starwars_response = requests.get(f"https://swapi.dev/api/people/{i}/").json()
+#         starwars_name = starwars_response["name"]
+#         starwars_height = starwars_response["height"]
+#         if isinstance(starwars_response["mass"], int):
+#             starwars_mass = starwars_response["mass"]
+#         else:
+#             starwars_mass = None
+#         starwars_home = requests.get(starwars_response["homeworld"]).json()["name"]
+#         a = Starwars_people.objects.create(name=starwars_name, height=starwars_height, mass=starwars_mass,
+#                                            homeworld=starwars_home)
+#         time.sleep(2)
+#         print("insert sucessfull for ", i)
+#     return render(request, 'partials/base.html')
+#
