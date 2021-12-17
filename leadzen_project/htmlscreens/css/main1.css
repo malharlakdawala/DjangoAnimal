@@ -201,11 +201,92 @@ input[type=checkbox] {
     line-height: 2;
 }
 
-.text_content ul li{
+.text_content ul li {
     color: black;
     font-weight: bold;
-font-size: 36px;
-line-height: 150%;
-        opacity: 1;
+    font-size: 36px;
+    line-height: 150%;
+    opacity: 1;
 
+}
+
+
+.container_search {
+    height: 80vh;
+    margin: 30px;
+    border: 2px solid #FB3E3E;
+    box-sizing: border-box;
+    /*filter: drop-shadow(0px 4px 17px rgba(0, 0, 0, 0.05));*/
+    background-size: cover;
+    display: flex;
+    justify-content: space-between;
+}
+
+.gmap {
+    width: 30%;
+    background-color: green;
+}
+
+.results {
+    width: 65%;
+    background-color: green;
+    align-items: center;
+    outline: 1px red;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+}
+
+.heading {
+    padding: 10px;
+    width: 100%;
+    background-color: yellow;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px dotted red;
+
+
+}
+
+#cars {
+    margin-right: 5px;
+}
+
+
+.table_results {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th, td {
+    border-top: 15px solid white;
+
+}
+
+.table {
+    table-layout: fixed;
+
+}
+
+.ten {
+    width: 10%;
+    height: 1rem;
+    background: tomato;
+}
+
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    height: 60px;
+
+}
+
+.twenty {
+    width: 20%;
+    background: turquoise;
+    height: 1rem;
 }
