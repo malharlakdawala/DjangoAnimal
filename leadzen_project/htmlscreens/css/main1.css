@@ -290,3 +290,50 @@ th, td {
     background: turquoise;
     height: 1rem;
 }
+
+.dashboard_content{
+    padding: 2rem;
+
+}
+.button_tabs{
+    margin-top: 1rem;
+}
+.button_tabs a{
+    margin-right: 0.5rem;
+}
+.call_stats{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.profile_content{
+        padding: 2rem;
+    background-color: green;
+
+}
+.profile_columns{
+    margin:2rem;
+    display: flex;
+}
+
+.profile_details{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: red;
+    height: 25rem;
+}
+
+.profile_columns img {
+  border-radius: 50%;
+    width: 8rem;
+}
+.profile_buttons{
+    display: flex;
+    justify-content: space-evenly;
+}
