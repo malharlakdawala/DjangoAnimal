@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load bootstrap5 %}
+{% load static %}
+
 
 <html lang="en">
 <head>
@@ -8,20 +10,24 @@
     {% bootstrap_css %}
     {%block css%}
     {%endblock%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 {%include 'partials/navbar.html'%}
-<div class="container">
 
-{%block content%}
+<div class="main_body">
 
-{%endblock%}
+    {%block content%}
+
+    {%endblock%}
 </div>
 
-{%include 'partials/footer.html'%}
-
 </body>
-{% bootstrap_javascript %}
-
 </html>
 

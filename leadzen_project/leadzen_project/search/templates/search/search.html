@@ -1,18 +1,25 @@
 {%extends 'partials/base.html'%}
-{%load bootstrap5%}
 {%block title%}Search{%endblock%}
+{%load static%}
 {%block content%}
-<div class="col-md-6 mx-auto">
-    Hi This is search page
-    <form method="post" class="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            Submit
-        </button>
-        {% endbuttons %}
-    </form>
 
+<div class="container">
+    <div class="inner_box">
+        <div class="logo_image">
+            <img src="{% static 'images/mascot.png'%}">
+        </div>
+        <div class="text_content">
+
+            <h1>Get most intelligent leads around you</h1>
+            <h5>Search the verified & real time leads in area with </h5>
+            <h5>Leadzen.ai - the most intelligent lead generation tool </h5>
+
+            <form class="form" id="search_form" , method="post">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" value="Search" class="submit">
+            </form>
+        </div>
+    </div>
 </div>
 {%endblock%}
