@@ -1,0 +1,119 @@
+* {
+    font-family: Poppins, normal
+}
+
+.container_profile_page {
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.message_block {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+    margin: 10px;
+}
+
+.button_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+
+}
+
+.chat_box {
+    border: 1px solid black;
+    height: 60rem;
+}
+
+.chat_text_area {
+    border: 1px solid black;
+    height: 80%;
+    background-color: white;
+
+}
+
+.chat_text_input {
+    width: 70%;
+}
+
+.chat_text_input_line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile_content_block {
+    width: 45vw;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+}
+
+.chat_title_bar {
+    background-color: rgba(255, 243, 243, 1);
+
+}
+
+.chat_buttons {
+    background-color: #F8F8F8;
+    color: #FB3E3E;
+    border-radius: 5px;
+    border: 1px solid #FB3E3E;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.chat_buttons:hover, .button_selected {
+    background-color: #FB3E3E;
+    color: #F8F8F8;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 200px; /* Could be more or less, depending on screen size */
+    height: 350px; /* Could be more or less, depending on screen size */
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    margin-right: 150px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -5,6 +5,7 @@ from search.models import CompanyRecords
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail
+from search.forms import Search_form
 
 
 # Create your views here.
@@ -13,7 +14,8 @@ def message(request,str):
     email = queryset.emails.split(",")
     phone = queryset.phones.split(",")
     contact_person=''.join(queryset.contact_person.split())
-    return render(request, "message.html", {"queryset":queryset, "email": email, "phone":phone, "contact_person":contact_person})
+    form=Search_form()
+    return render(request, "message.html", {"queryset":queryset, "email": email, "phone":phone, "contact_person":contact_person,'form':form})
 
 def email(request,mails):
     mail_list = list(mails.split(","))
@@ -22,7 +24,7 @@ def email(request,mails):
         message="Hello how are you. This is a test email",
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=mail_list)
-    return HttpResponse(str("Email message sent succesfully"))
+    return HttpResponse(status=204)
 
 
 def call(request,phn,name):
@@ -43,7 +45,7 @@ def call(request,phn,name):
     r = requests.post(url, headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'},data=parameters)
 
     print(r.text)
-    return HttpResponse(str("Call placed sent succesfully"))
+    return HttpResponse(status=204)
 
 
 def sms(request,str):
@@ -72,7 +74,8 @@ def whatsapp(request,phn,name):
     }
     response = requests.request('POST', url, headers=headers, json=payload)
     print(response.json().values)
-    return HttpResponse(str("Whatsapp message sent succesfully"))
+    return HttpResponse(status=204)
+
 
 
 
