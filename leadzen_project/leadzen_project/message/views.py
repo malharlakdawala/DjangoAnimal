@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from search.forms import Search_form
 
-
+message_id=[]
 # Create your views here.
 def message(request,str):
     queryset=CompanyRecords.objects.get(uuid_field=str)
@@ -73,11 +73,32 @@ def whatsapp(request,phn,name):
         'Accept': 'application/json'
     }
     response = requests.request('POST', url, headers=headers, json=payload)
-    print(response.json().values)
+    print(response.text)
+    message_id.append(response.text)
     return HttpResponse(status=204)
 
+def logs(request,id):
+    form = Search_form()
+    response=requests.get("https://product.hr.frejun.com/api/v1/integrations/calls/?page_size=8",headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'})
+    a=response.json()
+    print("count",a["count"])
+    print(a["results"][0]["candidate_name"])
 
+    return render(request,'logs.html',{"response":a,'form':form})
 
+def whatsapp_log(request,id):
+    form = Search_form()
+    url = "https://api.tellephant.com/v1/message-history"
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    msg_response=[]
+    for msg_id in message_id:
+        payload= "{\"apikey\" : \"4v8dob0yjfTewtxe1NkaS0sHWeXgwluzmbD9HF8jAn8pD21ZKSsRhzaZ8AZTeKxqWKaqONtdVAq\",    \"messageId\" : \"61bf4284d0635326bd2623d7\"}"
+        response = requests.request("POST", url, headers=headers, data=payload)
+        print(response.text)
+        msg_response.append(response.text)
+    return render(request, 'whatsapp_log.html', {"msg_response": msg_response, 'form': form})
 
 
 

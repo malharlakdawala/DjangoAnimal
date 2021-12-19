@@ -1,0 +1,66 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block title%}Search{%endblock%}
+{%block content%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{% static 'style/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style_msg/style_msg.css' %}">
+
+
+<div class="dashboard_content">
+    <div><h2>Dashboard</h2></div>
+    <div class="button_tabs">
+        <a href="{%url 'logs' 1%}" class="chat_buttons button_selected">Call logs</a>
+        <a href="{%url 'whatsapp_log' 1%}" class="chat_buttons">Whatsapp logs</a>
+        <a href="#" class="chat_buttons">Email slogs</a>
+    </div>
+    <div class="call_stats">
+
+        <div class="total_user">
+            <h3>Total Calls</h3>
+            <h1>{{response.count}}</h1>
+        </div>
+
+        <div class="call_answered">
+            <h3>Call Answered</h3>
+            <h1>8</h1>
+        </div>
+        <div class="average_minutes">
+            <h3>Average Minutes</h3>
+            <h1>0</h1>
+        </div>
+    </div>
+    <div class="call_details_log"></div>
+
+    <div class="call_log_table_class">
+        <table class="call_log_table_table">
+
+
+            <tr>
+                <th>Sr. No.</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+                <th>Call Start Time</th>
+                <th>Call Duration</th>
+                <th>Recording</th>
+            </tr>
+            {%for call in response.results %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{call.candidate_name}}</td>
+                <td>{{call.candidate_number}}</td>
+                <td>{{call.status}}</td>
+                <td>{{call.call_start_time}}</td>
+                <td style="text-align: center">{{call.call_duration}}</td>
+                <td><a href="{{call.link}}" class="chat_buttons">Hear Recording</a></td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+
+{%endblock%}

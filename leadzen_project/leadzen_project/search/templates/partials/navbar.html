@@ -3,13 +3,10 @@
 <nav class="navbar">
     <!-- NAVIGATION MENU -->
 
-    <select name="cars" id="cars" style="height: 2rem; width:5rem">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
-    </select>
-
+    <div class="menu_items">
+        <a href="{% url 'search'%}">Search</a>
+        <a href="{%url 'logs' 1%}">Logs</a>
+    </div>
 
     <form class="form" id="search_form1" method="post">
         {% csrf_token %}

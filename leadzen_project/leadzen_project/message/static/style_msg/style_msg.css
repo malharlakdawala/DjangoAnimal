@@ -117,3 +117,14 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.call_log_table_table{
+    width: 90vw;
+    padding:10px;
+}
+.call_log_table_table td, .call_log_table_table th{
+    border: 1px solid black;
+    text-align: center;
+    height: 3rem;
+
+}
