@@ -1,3 +1,5 @@
+import time
+
 import requests
 import json
 from django.shortcuts import render
@@ -6,18 +8,25 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail
 from search.forms import Search_form
+from .cleanfile import Cleanstring
 
-message_id=[]
+
+message_id = []
 # Create your views here.
-def message(request,str):
-    queryset=CompanyRecords.objects.get(uuid_field=str)
+def message(request, str):
+    queryset = CompanyRecords.objects.get(uuid_field=str)
     email = queryset.emails.split(",")
     phone = queryset.phones.split(",")
-    contact_person=''.join(queryset.contact_person.split())
-    form=Search_form()
-    return render(request, "message.html", {"queryset":queryset, "email": email, "phone":phone, "contact_person":contact_person,'form':form})
+    contact_person = ''.join(queryset.contact_person.split()) if queryset.contact_person else "hi"
+    form = Search_form()
+    a=Cleanstring()
+    ai_description = a.clean(queryset.description)
+    return render(request, "message.html",
+                  {"queryset": queryset, "email": email, "phone": phone, "contact_person": contact_person,
+                   'form': form, "ai_description":ai_description})
 
-def email(request,mails):
+
+def email(request, mails):
     mail_list = list(mails.split(","))
     send_mail(
         subject="Test Email",
@@ -27,9 +36,9 @@ def email(request,mails):
     return HttpResponse(status=204)
 
 
-def call(request,phn,name):
-    phn=str(phn)
-    phone_no = phn[:2]+"0"+phn[2:]
+def call(request, phn, name):
+    phn = str(phn)
+    phone_no = phn[:2] + "0" + phn[2:]
     print(phone_no)
     url = "https://product.hr.frejun.com/api/v1/integrations/create-call/"
 
@@ -42,16 +51,18 @@ def call(request,phn,name):
         "candidate_name": name
     }
 
-    r = requests.post(url, headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'},data=parameters)
+    r = requests.post(url, headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'},
+                      data=parameters)
 
     print(r.text)
     return HttpResponse(status=204)
 
 
-def sms(request,str):
+def sms(request, str):
     pass
 
-def whatsapp(request,phn,name):
+
+def whatsapp(request, phn, name):
     url = 'https://api.tellephant.com/v1/send-message'
     payload = {
         "apikey": "4v8dob0yjfTewtxe1NkaS0sHWeXgwluzmbD9HF8jAn8pD21ZKSsRhzaZ8AZTeKxqWKaqONtdVAq",
@@ -74,31 +85,34 @@ def whatsapp(request,phn,name):
     }
     response = requests.request('POST', url, headers=headers, json=payload)
     print(response.text)
-    message_id.append(response.text)
-    return HttpResponse(status=204)
+    msg_id = response.text
 
-def logs(request,id):
-    form = Search_form()
-    response=requests.get("https://product.hr.frejun.com/api/v1/integrations/calls/?page_size=8",headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'})
-    a=response.json()
-    print("count",a["count"])
-    print(a["results"][0]["candidate_name"])
-
-    return render(request,'logs.html',{"response":a,'form':form})
-
-def whatsapp_log(request,id):
-    form = Search_form()
-    url = "https://api.tellephant.com/v1/message-history"
+    url_whatsapp_log = "https://api.tellephant.com/v1/message-history"
     headers = {
         'Content-Type': 'application/json'
     }
-    msg_response=[]
-    for msg_id in message_id:
-        payload= "{\"apikey\" : \"4v8dob0yjfTewtxe1NkaS0sHWeXgwluzmbD9HF8jAn8pD21ZKSsRhzaZ8AZTeKxqWKaqONtdVAq\",    \"messageId\" : \"61bf4284d0635326bd2623d7\"}"
-        response = requests.request("POST", url, headers=headers, data=payload)
-        print(response.text)
-        msg_response.append(response.text)
+    payload = "{\"apikey\" : \"4v8dob0yjfTewtxe1NkaS0sHWeXgwluzmbD9HF8jAn8pD21ZKSsRhzaZ8AZTeKxqWKaqONtdVAq\",    \"messageId\" : \"msg_id\"}"
+    time.sleep(5)
+    response_log = requests.request("POST", url, headers=headers, data=payload)
+    print(response_log.text)
+    message_id.append(response_log.text)
+    return HttpResponse(status=204)
+
+
+def logs(request, id):
+    form = Search_form()
+    response = requests.get("https://product.hr.frejun.com/api/v1/integrations/calls/?page_size=8",
+                            headers={'Authorization': 'Api-Key zRyfu7IZ.Ni1nkhbLhj2TfYgF0cn33d8ekltz6lE0'})
+    a = response.json()
+    print("count", a["count"])
+    print(a["results"][0]["candidate_name"])
+
+    return render(request, 'logs.html', {"response": a, 'form': form})
+
+
+def whatsapp_log(request, id):
+    form = Search_form()
+    print(message_id)
+    msg_response = message_id
     return render(request, 'whatsapp_log.html', {"msg_response": msg_response, 'form': form})
-
-
 

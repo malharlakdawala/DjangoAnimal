@@ -19,6 +19,11 @@
         <h5><b>Description: </b>{{queryset.description}}</h5>
         {%endif%}
 
+        {%if queryset.description%}
+        <h5><b>AI-Description: </b>{{ai_description}}</h5>
+        {%endif%}
+
+
         {%if queryset.busniess_name%}
         <h5><b>Busniess Name: </b>{{queryset.busniess_name}}</h5>
         {%endif%}
