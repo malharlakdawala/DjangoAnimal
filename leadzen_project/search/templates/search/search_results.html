@@ -1,0 +1,263 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block title%}Search Results{%endblock%}
+{%block content%}
+<!--<script src="http://maps.google.com/maps/api/js?key=AIzaSyD_GA7bt6y8yKDyKrazSd3mr02n4k"-->
+<!--        type="text/javascript"></script>-->
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyD_GA7bt6y8yKDyKrazSICaf_d3mr02n4k"
+        type="text/javascript"></script>
+
+<div class="total_results">
+    <div class="map" id="map"></div>
+    <div class="results">
+        <div class="heading">
+            <h3>Search Results for: {{search_query}}</h3>
+            <form action="/action_page.php">
+                <select name="bulk" id="bulk">
+                    <option value="calls">Calls</option>
+                    <option value="whatsapp">Whatsapp</option>
+                    <option value="email">Email</option>
+                    <option value="message">Message</option>
+                </select>
+                <input type="submit" value="Submit" class="bulk_button">
+            </form>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" style="width: 5%"></th>
+                <th scope="col">Company Name</th>
+                <th scope="col" style="width: 45%">Description</th>
+                <th scope="col">Contact Person</th>
+                <!--            <th scope="col">Email</th>-->
+                <!--            <th scope="col">Phone No.</th>-->
+                <!--                <th scope="col">Address</th>-->
+                <th scope="col">View Profile</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for query in queryset%}
+            <tr>
+                <td><input type="checkbox" id={{query.uuid_field}} class="check_box"></td>
+                <td style="text-transform: capitalize">{{query.company_name}}</td>
+                <td>{{query.description}}</td>
+                <td>{{query.contact_person}}</td>
+                <!--            <td>{{query.emails}}</td>-->
+                <!--            <td>{{query.phones}}</td>-->
+                <!--                <td>{{query.address}}</td>-->
+                <td><a href="{%url 'message' query.uuid_field%}" class="view_profile_button " tabindex="-1"
+                       role="button"
+                       aria-disabled="true">View Profile</a></td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% if queryset.has_other_pages %}
+<div class="footer_content">
+    <h5></h5>
+    <ul class="pagination">
+        {% if queryset.has_previous %}
+        <li><a href="?page={{ queryset.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in queryset.paginator.page_range %}
+        {% if queryset.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if queryset.has_next %}
+        <li><a href="?page={{ queryset.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+
+{%if pincode_detais.pincode_response%}
+<div class="pincode_details">
+    <h2 style="text-align: center">Areawise Details</h2>
+    <div class="pincode_content">
+        <div class="area_details">
+            <table class="area_details_table">
+                <tr>
+                    <th>Areawise Details</th>
+                </tr>
+                <tr>
+                    <td>Pincode</td>
+                    <td>{{pincode_detais.pincode_response.pincode}}</td>
+                </tr>
+                <tr>
+                    <td>Area</td>
+                    <td>{{pincode_detais.pincode_response.officename}}</td>
+                </tr>
+                <tr>
+                    <td>Sector</td>
+                    <td>{{pincode_detais.pincode_response.regionname}}</td>
+                </tr>
+                <tr>
+                    <td>Taluka</td>
+                    <td>{{pincode_detais.pincode_response.Taluk}}</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>{{pincode_detais.pincode_response.statename}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="demographic_details">
+            <table class="area_details_table">
+                <tr>
+                    <th>Demographics</th>
+                </tr>
+                <tr>
+                    <td>Population</td>
+                    <td>{{pincode_detais.statistics.population}}</td>
+                </tr>
+                <tr>
+                    <td>Male Population</td>
+                    <td>{{pincode_detais.statistics.male_population}}</td>
+                </tr>
+                <tr>
+                    <td>Female Population</td>
+                    <td>{{pincode_detais.statistics.female_population}}</td>
+                </tr>
+                <tr>
+                    <td>Average Income in this area</td>
+                    <td>Rs. {{pincode_detais.statistics.avg_income}}</td>
+                </tr>
+                <tr>
+                    <td>Spending Capacity</td>
+                    <td>Rs. {{pincode_detais.statistics.spending_capacity}}</td>
+                </tr>
+                <tr>
+                    <td>Life Quality Index</td>
+                    <td>{{pincode_detais.statistics.life_quality}}</td>
+                </tr>
+
+            </table>
+
+        </div>
+        <div class="facilities">
+            <table class="area_details_table">
+                <tr>
+                    <th>No. of Facilities in area</th>
+                </tr>
+                <tr>
+                    <td>Restaurants</td>
+                    <td>{{pincode_detais.statistics.restaurants}}</td>
+                </tr>
+                <tr>
+                    <td>Socities</td>
+                    <td>{{pincode_detais.statistics.socities}}</td>
+                </tr>
+
+                <tr>
+                    <td>Offices</td>
+                    <td>{{pincode_detais.statistics.offices}}</td>
+                </tr>
+
+                <tr>
+                    <td>Educational Institutes</td>
+                    <td>{{pincode_detais.statistics.educational_institutes}}</td>
+                </tr>
+                <tr>
+                    <td>Religious places</td>
+                    <td>{{pincode_detais.statistics.temples}}</td>
+                </tr>
+                <tr>
+                    <td>Entertainment Zones</td>
+                    <td>{{pincode_detais.statistics.theaters}}</td>
+                </tr>
+                <tr>
+                    <td>Kirana stores</td>
+                    <td>{{pincode_detais.statistics.kirana}}</td>
+                </tr>
+                <tr>
+                    <td>Banks</td>
+                    <td>{{pincode_detais.statistics.banks}}</td>
+                </tr>
+                <tr>
+                    <td>Parks</td>
+                    <td>{{pincode_detais.statistics.parks}}</td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+{%endif%}
+
+<script type="text/javascript">
+    var delay = 100;
+    var infowindow = new google.maps.InfoWindow();
+    var latlng = new google.maps.LatLng(21.0000, 78.0000);
+    var mapOptions = {
+        zoom: 5,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var geocoder = new google.maps.Geocoder();
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var bounds = new google.maps.LatLngBounds();
+
+    function geocodeAddress(address, next) {
+        geocoder.geocode({address: address}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var p = results[0].geometry.location;
+                    var lat = p.lat();
+                    var lng = p.lng();
+                    createMarker(address, lat, lng);
+                } else {
+                    if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+                        nextAddress--;
+                        delay++;
+                    } else {
+                    }
+                }
+                next();
+            }
+        );
+    }
+
+    function createMarker(add, lat, lng) {
+        var contentString = add;
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lng),
+            map: map,
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+        });
+
+        bounds.extend(marker.position);
+
+    }
+
+    var locations = {{gmap_array|safe}};
+    var nextAddress = 0;
+
+    function theNext() {
+        if (nextAddress < locations.length) {
+            setTimeout('geocodeAddress("' + locations[nextAddress] + '",theNext)', delay);
+            nextAddress++;
+        } else {
+            map.fitBounds(bounds);
+        }
+    }
+
+    theNext();
+
+</script>
+
+{%endblock%}

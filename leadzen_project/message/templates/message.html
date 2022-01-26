@@ -1,0 +1,287 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block title%}Profile{%endblock%}
+{%block content%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+<link rel="stylesheet" type="text/css" href="{% static 'style/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style_msg/style_msg.css' %}">
+
+<div class="container_profile_page" id="profile_page_container">
+    <div class="profile_content_block">
+        {%if queryset.company_name%}
+        <h5><b>Company Name: </b>{{queryset.company_name}}</h5>
+        {%endif%}
+
+        {%if queryset.description|length > 5%}
+        <h5><b>Description: </b>{{queryset.description}}</h5>
+        {%endif%}
+
+        {%if queryset.description|length > 5%}
+        <h5><b>AI-Description: </b>{{ai_description}}</h5>
+        {%endif%}
+
+
+        {%if queryset.busniess_name%}
+        <h5><b>Busniess Name: </b>{{queryset.busniess_name}}</h5>
+        {%endif%}
+
+
+        {%if queryset.industry%}
+        <h5><b>Industry: </b>{{queryset.industry}}</h5>
+        {%endif%}
+
+        {%if queryset.category%}
+        <h5><b>Description: </b>{{queryset.category}}</h5>
+        {%endif%}
+
+        {%if queryset.no_of_employees%}
+        <h5><b>Employee Strength: </b>{{queryset.no_of_employees}}</h5>
+        {%endif%}
+
+        {%if queryset.legal_status%}
+        <h5><b>Type: </b>{{queryset.legal_status}}</h5>
+        {%endif%}
+
+        {%if queryset.turnover%}
+        <h5><b>Turnover: </b>{{queryset.turnover}}</h5>
+        {%endif%}
+
+        {%if queryset.turnover_range%}
+        <h5><b>Turnover Range: </b>{{queryset.turnover_range}}</h5>
+        {%endif%}
+
+        {%if queryset.address%}
+        <h5><b>Address: </b>{{queryset.address}}</h5>
+        {%endif%}
+
+
+        {%if queryset.city%}
+        <h5><b>City: </b>{{queryset.city}}</h5>
+        {%endif%}
+
+
+        {%if queryset.state%}
+        <h5><b>State: </b>{{queryset.state}}</h5>
+        {%endif%}
+        {%if queryset.pincode%}
+        <h5><b>Pincode: </b>{{queryset.pincode}}</h5>
+        {%endif%}
+
+        {%if queryset.country%}
+        <h5><b>Country: </b>{{queryset.country}}</h5>
+        {%endif%}
+
+        {%if queryset.contact_person%}
+        <h5><b>Contact Person: </b>{{queryset.contact_person}}</h5>
+        {%endif%}
+
+        {%if queryset.designation%}
+        <h5><b>Designation: </b>{{queryset.designation}}</h5>
+        {%endif%}
+
+        {%if queryset.emails%}
+        <h5><b>Emails: </b>{{queryset.emails}}</h5>
+        {%endif%}
+
+        {%if queryset.phones%}
+        <h5><b>Phones: </b>+{{queryset.phones}}</h5>
+        {%endif%}
+
+        {%if queryset.website%}
+        <h5><b>Website: </b><a href="{{queryset.website}}" target="_blank">{{queryset.website}}</a></h5>
+        {%endif%}
+
+        {%if queryset.linkedin_url%}
+        <h5><b>Linkedin URL: </b><a href="{{queryset.linkedin_url}}" target="_blank">{{queryset.linkedin_url}}</a></h5>
+        {%endif%}
+
+        {%if queryset.turnover_range%}
+        <h5><b>Turnover Range: </b>{{queryset.turnover_range}}</h5>
+        {%endif%}
+        {%if queryset.pan%}
+        <h5><b>PAN: </b>{{queryset.pan}}</h5>
+        {%endif%}
+
+        {%if queryset.gsts%}
+        <h5><b>GST: </b>{{queryset.gsts}}</h5>
+        {%endif%}
+
+        {%if queryset.extra%}
+        <h5><b>Extra: </b>{{queryset.extra}}</h5>
+        {%endif%}
+
+        {%if queryset.incorporation_date%}
+        <h5><b>Incorporation Date: </b>{{queryset.incorporation_date}}</h5>
+        {%endif%}
+
+        {%if queryset.company_name%}
+        {%if queryset.address%}
+
+        <iframe
+                width="580"
+                class="gmap_indv"
+                height="400"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD_GA7bt6y8yKDyKrazSICaf_d3mr02n4k
+  &q={{queryset.company_name}}+{{queryset.address}}" allowfullscreen>
+        </iframe>
+        {%endif%}
+        {%endif%}
+
+
+    </div>
+    <div class="message_block">
+        <div class="button_group">
+            <a href="{%url 'email' email.0 %}" class="chat_buttons button_selected" id="email_btn"><i
+                    class="fas fa-envelope"></i> Email</a>
+            <a href="{%url 'call' phone.0 contact_person%}" class="chat_buttons" id="call_btn"><i
+                    class="fas fa-phone-volume"></i> Call</a>
+            <a href="{%url 'whatsapp' phone.0 contact_person%}" class="chat_buttons" id="whatsapp_btn"><i
+                    class="fab fa-whatsapp"></i>
+                Whatsapp</a>
+            <a href="{%url 'sms' phone.0%}" class="chat_buttons" id="sms_btn"><i class="fas fa-sms"></i> Message</a>
+        </div>
+        <div class="chat_box">
+            <div class="chat_title_bar">
+                {%if queryset.contact_person%}
+                <b>{{queryset.contact_person}}</b>
+                {%endif%}
+                <div></div>
+                <i class="fas fa-envelope"></i> {{queryset.emails}}
+            </div>
+
+            <div class="chat_text_area" id="chat_text_area">
+
+            </div>
+            <div class="chat_text_input_line">
+
+                <input type="text" id="chat_text_input" placeholder="Write Message here" class="chat_text_input">
+                <!--                <input type="submit" value="Send" class="chat_buttons button_selected" id="send_button">-->
+                <button class="chat_buttons button_selected" id="send_button"><i class="fas fa-paper-plane"></i> Send
+                </button>
+                <a href="#" class="chat_buttons"><i class="fas fa-plus"></i> Add</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="{%static 'images/calling.png'%}">
+        <br>
+        <h3 style="text-align: center"><b>Ongoing</b></h3>
+        <h6 style="text-align: center">{{queryset.contact_person}}</h6>
+        <h6 style="text-align: center">+{{queryset.phones}}</h6>
+    </div>
+
+</div>
+
+<script>
+
+    console.log("js");
+    const inputField = document.getElementById("chat_text_input");
+    inputField.addEventListener("keydown", function (e) {
+        if (e.code === "Enter") {
+            console.log("keypress done");
+            let input = inputField.value;
+            inputField.value = "";
+            let chat_area = document.getElementById("chat_text_area");
+            let input_msg_div = document.createElement("div");
+            input_msg_div.className = "chat_bulb";
+            input_msg_div.innerText = input;
+            input_msg_div.innerHTML = input;
+            chat_area.appendChild(input_msg_div);
+            chat_area.appendChild(document.createElement("br"));
+        }
+    });
+
+    const send_btn = document.getElementById("send_button");
+    send_btn.onclick = function () {
+
+        let input = inputField.value;
+        inputField.value = "";
+        let chat_area = document.getElementById("chat_text_area");
+        let input_msg_div = document.createElement("div");
+        input_msg_div.className = "chat_bulb";
+        input_msg_div.innerText = input;
+        input_msg_div.innerHTML = input;
+        chat_area.appendChild(input_msg_div);
+        chat_area.appendChild(document.createElement("br"));
+
+    }
+
+    const email_btn = document.getElementById("email_btn");
+    email_btn.onclick = function () {
+        let chat_area = document.getElementById("chat_text_area");
+        let input_msg_div = document.createElement("div");
+        input_msg_div.className = "email_btn_class";
+        input_msg_div.innerHTML = "Email Sent Succesfully ";
+        chat_area.appendChild(input_msg_div);
+        chat_area.appendChild(document.createElement("br"));
+    }
+    const call_btn = document.getElementById("call_btn");
+    call_btn.onclick = function () {
+        let chat_area = document.getElementById("chat_text_area");
+        let input_msg_div = document.createElement("div");
+        input_msg_div.className = "email_btn_class";
+        input_msg_div.innerHTML = "Call Placed Succesfully ";
+        chat_area.appendChild(input_msg_div);
+        chat_area.appendChild(document.createElement("br"));
+    }
+    const whatsapp_btn = document.getElementById("whatsapp_btn");
+    whatsapp_btn.onclick = function () {
+        let chat_area = document.getElementById("chat_text_area");
+        let input_msg_div = document.createElement("div");
+        input_msg_div.className = "email_btn_class";
+        input_msg_div.innerHTML = "Whatsapp Message sent Succesfully ";
+        chat_area.appendChild(input_msg_div);
+        chat_area.appendChild(document.createElement("br"));
+    }
+    const sms_btn = document.getElementById("sms_btn");
+    sms_btn.onclick = function () {
+        let chat_area = document.getElementById("chat_text_area");
+        let input_msg_div = document.createElement("div");
+        input_msg_div.className = "email_btn_class";
+        input_msg_div.innerHTML = "SMS message sent Succesfully ";
+        chat_area.appendChild(input_msg_div);
+        chat_area.appendChild(document.createElement("br"));
+    }
+
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("call_btn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+
+{%endblock%}

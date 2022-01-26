@@ -1,0 +1,22 @@
+{% load static %}
+
+<nav class="navbar">
+    <!-- NAVIGATION MENU -->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <div class="menu_items">
+        <a href="{% url 'search'%}"><i class="fas fa-search"></i> Search</a>
+        <a href="{%url 'logs' 1%}"><i class="far fa-list-alt"></i> Logs</a>
+    </div>
+
+    <form class="form" id="search_form1" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Search" class="submit">
+    </form>
+    <div class="logo">
+        <a href="{% url 'search'%}">
+            <img id="logo" src="{% static 'images/logo.jpg'%}">
+        </a></div>
+</nav>

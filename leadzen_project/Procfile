@@ -1,1 +1,1 @@
-web: gunicorn leadzen_project.leadzen_project.wsgi --log-file -
+web: gunicorn leadzen_project.wsgi --log-file -

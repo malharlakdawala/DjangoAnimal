@@ -1,0 +1,175 @@
+* {
+    font-family: Poppins, normal
+}
+
+.container_profile_page {
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.message_block {
+    width: 40vw;
+    height: 35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+    margin: 10px;
+}
+
+.button_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2px;
+    margin-bottom: 10px;
+
+}
+
+.chat_title_bar {
+    background-color:white;
+    height: 4.5rem;
+    border-bottom: 10px solid #E4E4E4;
+    padding: 6px;
+
+}
+
+.chat_box {
+    border: 15px solid #E4E4E4;
+    background: #FFF3F3;
+    border-radius: 10px;
+}
+
+.chat_text_area {
+    height: 25rem;
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.chat_text_input {
+    width: 60%;
+    border: 1px solid #E4E4E4;
+
+
+}
+
+.chat_text_input_line {
+    border-top: 12px solid #E4E4E4;
+    display: flex;
+    justify-content: space-between;
+    background-color: #E4E4E4;
+}
+
+.profile_content_block {
+    width: 45vw;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+}
+
+
+.chat_buttons {
+    background-color: #F8F8F8;
+    color: #FB3E3E;
+    border-radius: 5px;
+    border: 1px solid #FB3E3E;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.chat_buttons:hover, .button_selected {
+    background-color: #FB3E3E;
+    color: #F8F8F8;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 200px; /* Could be more or less, depending on screen size */
+    height: 350px; /* Could be more or less, depending on screen size */
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    margin-right: 150px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.call_log_table_table {
+    width: 90vw;
+    padding: 10px;
+}
+
+.call_log_table_table td, .call_log_table_table th {
+    border: 1px solid black;
+    text-align: center;
+    height: 3rem;
+
+}
+
+.chat_bulb {
+    background-color: #E4E4E4;
+    min-width: 100px;
+    padding: 5px;
+    padding-left: 8px;
+    display: inline-block;
+    border-radius: 25px;
+    margin-top: 10px;
+
+}
+
+.gmap_indv{
+    border: 2px solid #FB3E3E;
+    border-radius: 15px;
+}
+
+.email_btn_class{
+        background-color: #00CF2E;
+    min-width: 100px;
+    padding: 5px;
+    padding-left: 8px;
+    display: inline-block;
+    border-radius: 25px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+
+
+}
