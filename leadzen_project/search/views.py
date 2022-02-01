@@ -129,6 +129,7 @@ class ExportImportExcel(APIView):
         excel_upload_obj = ExcelUpload.objects.create(excel_file_upload=request.FILES['files'])
         df = pd.read_csv(f"{settings.BASE_DIR}/{excel_upload_obj.excel_file_upload}")
         view_count=[]
+        data_list=[]
 
         async def main():
             async with aiohttp.ClientSession() as session:
@@ -153,43 +154,57 @@ class ExportImportExcel(APIView):
 
             async with session.get(url, headers=headers, params=querystring) as response:
                 result = await response.json()
-                print(result)
+                print("result", result)
+                print("result rpn",result['response']['place']['name'])
+                industry = [result['response']['place']['place_subtypes']['name'] for name in result['response']['place']['place_subtypes']]
+                if result['response']['place'] == df.loc[df[4]+", "+df[8]]:
+                    #compare output with input df
+
+
+                data_list.append(
+                    DataStorage(
+                        title=result['response']['place']['name'],
+                        full_address =result['response']['place']['full_address'],
+                        area =result['response']['place']['address_components']['district'],
+                        address1 =result['response']['place']['address_components']['address1'],
+                        city =result['response']['place']['address_components']['city'],
+                        state =result['response']['place']['address_components']['state'],
+                        pincode =result['response']['place']['address_components']['zipcode'],
+                        country =result['response']['place']['address_components']['country'],
+                        phone_number =result['response']['place']['phone_number'],
+                        # place_type =result['response']['place']['full_address'],
+                        industry = industry,
+                        website =result['response']['place']['website'],
+                        # social_links =result['response']['place']['full_address'],
+                        # price_range =result['response']['place']['full_address'],
+                        # timing =result['response']['place']['full_address'],
+                        # thumbnail =result['response']['place']['full_address'],
+
+                        latitude =result['response']['place']['latitude'],
+                        longitude =result['response']['place']['longitude'],
+
+                        google_place_id =result['response']['place']['google_place_id'],
+                        place_link =result['response']['place']['place_link'],
+                        cid =result['response']['place']['cid'],
+                        reviews_link =result['response']['place']['reviews_link'],
+                        booking_link =result['response']['place']['booking_link'],
+                        place_id =result['response']['place']['place_id'],
+                        global_plus_code =result['response']['place']['global_plus_code'],
+                        compound_plus_code =result['response']['place']['compound_plus_code'],
+                        review_count =result['response']['place']['review_count'],
+                        rating =result['response']['place']['rating'],
+                        createdate =result['response']['place']['full_address'],
+                        modifieddate =result['response']['place']['full_address'],
+                    )
+                )
 
             # DataStorage.objects.create(
             #     title=data[4],
-            #     full_address=
-            #     area
-            # address1
-            # city
-            # state
-            # pincode
-            # country
-            # phone_number
-            # place_type
-            # industry
-            # website
-            # social_links
-            # price_range
-            # timing
-            # thumbnail
-            #
-            # latitude
-            # longitude
-            #
-            # google_place_id
-            # place_link
-            # cid
-            # reviews_link
-            # booking_link
-            # place_id
-            # global_plus_code
-            # compound_plus_code
-            # review_count
-            # rating
-            # createdate
-            # modifieddate
+
 
             # )
 
+
         asyncio.run(main())
+        DataStorage.objects.bulk_create(data_list)
         return Response({'status': 200})
