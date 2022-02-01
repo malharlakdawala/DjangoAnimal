@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'search',
     'bootstrap5',
     'message',
-    'accounts'
+    'accounts',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
