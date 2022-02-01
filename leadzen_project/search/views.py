@@ -1,3 +1,4 @@
+import asyncio
 import random
 
 from django.shortcuts import render
@@ -16,6 +17,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import requests
 import pandas as pd
+import asyncio
+import aiohttp
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
@@ -120,30 +123,37 @@ def more_details(pincode):
     return pincode_detais
 
 
-def geocode(name_address):
-    url = "https://google-maps-geocoding-plus.p.rapidapi.com/geocode"
-
-    querystring = {"address": name_address, "language": "en"}
-
-    headers = {
-        'x-rapidapi-host': "google-maps-geocoding-plus.p.rapidapi.com",
-        'x-rapidapi-key': "d6a2e73179mshfa5a8a3fa183d90p1a1499jsn14c184f39007"
-    }
-
-    response = requests.request("GET", url, headers=headers, params=querystring)
-
-    return response.text
-
-
 class ExportImportExcel(APIView):
     def post(self, request):
         temp_arr = []
         excel_upload_obj = ExcelUpload.objects.create(excel_file_upload=request.FILES['files'])
         df = pd.read_csv(f"{settings.BASE_DIR}/{excel_upload_obj.excel_file_upload}")
-        # print(df)
-        for data in df.values.tolist():
-            geocode_json = geocode(data[4] + ", " + data[8])
-            print(geocode_json)
+        view_count=[]
+
+        async def main():
+            async with aiohttp.ClientSession() as session:
+                tasks = []
+
+                for data in df.values.tolist():
+                    name_address = data[4] + ", " + data[8]
+                    task = asyncio.ensure_future(geocode(session, name_address))
+                    tasks.append(task)
+
+                view_count = await asyncio.gather(*tasks)
+
+        async def geocode(session, name_address):
+            url = "https://google-maps-geocoding-plus.p.rapidapi.com/geocode"
+
+            querystring = {"address": name_address, "language": "en"}
+
+            headers = {
+                'x-rapidapi-host': "google-maps-geocoding-plus.p.rapidapi.com",
+                'x-rapidapi-key': "d6a2e73179mshfa5a8a3fa183d90p1a1499jsn14c184f39007"
+            }
+
+            async with session.get(url, headers=headers, params=querystring) as response:
+                result = await response.json()
+                print(result)
 
             # DataStorage.objects.create(
             #     title=data[4],
@@ -180,4 +190,6 @@ class ExportImportExcel(APIView):
             # modifieddate
 
             # )
+
+        asyncio.run(main())
         return Response({'status': 200})
