@@ -12,7 +12,8 @@ from django.db import models
 
 
 class CompanyRecords(models.Model):
-    uuid_field = models.CharField(db_column='uuid_', primary_key=True, max_length=75)  # Field renamed because it ended with '_'.
+    uuid_field = models.CharField(db_column='uuid_', primary_key=True,
+                                  max_length=75)  # Field renamed because it ended with '_'.
     cin = models.CharField(max_length=21, blank=True, null=True)
     company_name = models.CharField(max_length=100, blank=True, null=True)
     busniess_name = models.CharField(max_length=100, blank=True, null=True)
@@ -92,3 +93,39 @@ class PersonRecords(models.Model):
     class Meta:
         managed = False
         db_table = 'person_records'
+
+    class DataStorage(models.Model):
+        title = models.CharField(max_length=80, blank=True, null=True)
+        full_address = models.TextField(blank=True, null=True)
+        area = models.TextField(blank=True, null=True)  # district
+        address1 = models.TextField(blank=True, null=True)
+        city = models.CharField(max_length=30, blank=True, null=True)
+        state = models.CharField(max_length=30, blank=True, null=True)
+        pincode = models.CharField(max_length=10, blank=True, null=True)
+        country = models.CharField(max_length=30, blank=True, null=True)
+        phone_number = models.CharField(max_length=30, blank=True, null=True)
+        place_type = models.TextField(blank=True, null=True)
+        industry = models.CharField(max_length=30, blank=True, null=True)
+        website = models.CharField(max_length=50, blank=True, null=True)
+        social_links = models.TextField(blank=True, null=True)
+        price_range = models.CharField(max_length=30, blank=True, null=True)
+        timing = models.TextField(blank=True, null=True)
+        thumbnail = models.TextField(blank=True, null=True)
+
+        latitude = models.CharField(max_length=30, blank=True, null=True)
+        longitude = models.CharField(max_length=30, blank=True, null=True)
+
+        google_place_id = models.CharField(max_length=30, blank=True, null=True)
+        place_link = models.CharField(max_length=30, blank=True, null=True)
+        cid = models.CharField(max_length=30, blank=True, null=True)
+        reviews_link = models.TextField(blank=True, null=True)
+        booking_link = models.TextField(blank=True, null=True)
+        place_id = models.TextField(blank=True, null=True)
+        global_plus_code = models.CharField(max_length=30, blank=True, null=True)
+        compound_plus_code = models.CharField(max_length=30, blank=True, null=True)
+
+        review_count = models.CharField(max_length=5, blank=True, null=True)
+        rating = models.CharField(max_length=5, blank=True, null=True)
+
+        createdate = models.DateTimeField(blank=True, null=True)
+        modifieddate = models.DateTimeField(blank=True, null=True)

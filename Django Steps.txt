@@ -411,3 +411,5 @@ navbar.html
 	<a href="{% url 'login' %}" class="nav-link ">Login</a>
 </li>
 {%endif%}
+
+python manage.py inspectdb > models.py #import existing postgresql database to django
